@@ -217,9 +217,9 @@ const App: React.FC = () => {
 
   const handleLogin = (email: string, password: string) => {
     const users: Record<string, { password: string; role: string }> = {
-      "lavarapidonelsinhocadastro@gmail.com": { password: "NelsinhoLR@24", role: "admin" },
+      "": { password: "", role: "admin" },
 
-      "visualizarveiculoslavarapido@gmail.com": { password: "Visualizar@002", role: "viewer" },
+      "": { password: "", role: "viewer" },
     };
 
     if (typeof email !== "string" || email.trim() === "") {
