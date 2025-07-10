@@ -1,50 +1,82 @@
-# React + TypeScript + Vite
+<h1>🚗 Lava Rápido </h1>
+Este é um aplicativo React para gerenciamento de veículos em um lava-rápido, com autenticação de usuários e várias funcionalidades. Vamos detalhar os aspectos mais importantes:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h2>📂 Estrutura Principal</h2>
+Dependências e Importações
+-Bibliotecas principais: React, Material-UI (MUI), dayjs para manipulação de datas
+-Componentes MUI: AppBar, Table, Dialog, etc. para a interface
+-Componentes personalizados: CarForm e Login
 
-Currently, two official plugins are available:
+<h3>Interface e Tipagem</h3>
+typescript
+interface Car {
+  id: string;
+  plate: string;
+  model: string;
+  owner: string;
+  status: "Recebido" | "Em Andamento" | "Pronto" | "Retirado";
+  location: "Independência" | "Shopping";
+  timestamp: string;
+  withdrawnBy?: string;
+  withdrawnTimestamp?: string;
+  sl?: string;
+}
+Define a estrutura de um veículo com todos os campos necessários.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<h3>Funcionalidades Principais</h3>
+1. Autenticação e Autorização
+-Login: Verifica credenciais contra um objeto users hardcoded
+-Roles: admin (pode adicionar/editar/excluir) e viewer (somente visualização)
+-Persistência: Usa localStorage para manter sessão
 
-## Expanding the ESLint configuration
+2. CRUD de Veículos
+-Create: addCar envia POST para a API
+-Read: fetchCars busca veículos com filtros por data
+-Update: updateCarStatus envia PUT para alterar status
+-Delete: handleDelete envia DELETE para remover veículo
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+3. Filtros Avançados
+-Filtros por: placa, modelo, proprietário, status, localização, SL e data
+-Botão para limpar todos os filtros
 
-- Configure the top-level `parserOptions` property like this:
+4. Fluxo de Trabalho
+-Status possíveis: Recebido → Em Andamento → Pronto → Retirado
+-Para marcar como "Retirado", é necessário informar o nome de quem retirou
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Componentes Importantes
+1. Tabela de Veículos
+-Exibe todos os veículos filtrados
+-Colunas: Placa, Modelo, Nome, SL, Status, Localização, etc.
+-Ações por linha (editar, excluir, marcar como retirado)
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Formulário de Veículo
+-Componente separado (CarForm)
+-Somente visível para usuários com role admin
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+3. Diálogos
+-Diálogo para edição de status
+-Diálogo implícito para inserir nome ao retirar veículo
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+<h3>Estilização e Temas</h3>
+-Usa ThemeProvider do MUI com paleta personalizada
+-Estilos globais com CssBaseline
+-Estilos específicos para componentes como TextField
+
+<h3>Gerenciamento de Estado</h3>
+useState para:
+-Lista de veículos (cars, filteredCars)
+-Estado de autenticação (isLoggedIn, userRole)
+-Filtros ativos
+-Diálogos abertos
+
+useEffect para:
+-Carregar veículos quando a data do filtro muda
+-Aplicar filtros quando os critérios mudam
+-Verificar autenticação ao carregar o app
+
+<h3>Integração com API</h3>
+Todas as operações CRUD usam fetch para se comunicar com:
+
+${environments.API_URL}/veiculos
+
+Tratamento básico de erros
