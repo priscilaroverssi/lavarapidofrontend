@@ -1,4 +1,4 @@
-<h1>🚗 Lava Rápido </h1>
+<h1>🚗 Lava Rápido Front-end </h1>
 Este é um aplicativo React para gerenciamento de veículos em um lava-rápido, com autenticação de usuários e várias funcionalidades. Vamos detalhar os aspectos mais importantes:
 <br>
 <br>
