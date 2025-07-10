@@ -1,6 +1,7 @@
 <h1>🚗 Lava Rápido </h1>
 Este é um aplicativo React para gerenciamento de veículos em um lava-rápido, com autenticação de usuários e várias funcionalidades. Vamos detalhar os aspectos mais importantes:
 <br>
+<br>
 <h2>📂 Estrutura Principal</h2>
 <p>Dependências e Importações</p>
 <p>-Bibliotecas principais: React, Material-UI (MUI), dayjs para manipulação de datas</p>
